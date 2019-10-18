@@ -30,7 +30,8 @@ class Main{
             inventario.AgregarProducto(articulo);
             inventario.AgregarEnTabla(articulo);
             inventario.Invertir(articulo);
-            //inventario._invertirArticulos(articulo);
+            //NO FUNCIONA: inventario.agregarEnPosicion(articulo);
+            
 
         toString.textContent = articulo.toString();
         

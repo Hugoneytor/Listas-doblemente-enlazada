@@ -1,6 +1,5 @@
 export default class Inventario{
     constructor(tableArt,tableInfo){
-
         //Tabla de los Artículos
         this._tableArt = tableArt;
         //Tabla de la Información
@@ -12,13 +11,8 @@ export default class Inventario{
         //Vector de los artículos
         this._primerArticulo = null;
         this._ultimoArticulo = null;
-
-
-
-        //Contador vector}
-
-        this._contador = 0;
-        
+        //Contador vector
+        this._contador = 0;        
         console.log(this._articulos);
     }
 
@@ -34,8 +28,7 @@ export default class Inventario{
         row.cells[5].appendChild(btnBorrar);
     }
 
-    AgregarProducto(objArticulo){
-      
+    AgregarProducto(objArticulo){      
       if(this._primerArticulo == null){
         this._primerArticulo = objArticulo;
         this._ultimoArticulo = objArticulo;
@@ -45,30 +38,15 @@ export default class Inventario{
         this._ultimoArticulo.siguiente = objArticulo;
         this._ultimoArticulo = objArticulo;
         this._ultimoArticulo.anterior = anterior;
-        this._contador++;
-       
+        this._contador++;       
+        
       }
+      
      console.log(this._primerArticulo);
 
     }
-    //Insertar en posición al agregar
-    /*  NO FUNCIONA JAJAJ :'v
-
-    insertarEnPosicion(objArticulo){
-      let simon = objArticulo;
-      let first = this._primerArticulo;
-      while(first != null){
-      if(this._articulos != null){
-      if(simon.codigo < first.anterior.codigo && simon.codigo > first.siguiente.codigo){
-        this._ultimoArticulo = simon;
-      }
-      first = this._ultimoArticulo.siguiente;
-    }
-  }
-    return next;
-}
-    */
-
+   
+    
     //Método para borrar un artículo
     borrarArticulo(row,articulo){
       let pos = this._buscarArticulo(articulo.codigo);
@@ -105,8 +83,14 @@ export default class Inventario{
         }
         return buscar;
       }
+    /* Agregar en posición: No FUNCIONA */
     agregarEnPosicion(){
-      
+      let posicion = this._primerArticulo;
+      while(posicion != null){
+        if(posicion.codigo > posicion.siguiente.codigo){
+          posicion = posicion.siguiente;
+        }
+      }
     }
 
     Invertir(){
