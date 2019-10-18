@@ -34,7 +34,7 @@ export default class Inventario{
         row.cells[5].appendChild(btnBorrar);
     }
 
-    AgregarProducto(objArticulo,articulo){
+    AgregarProducto(objArticulo){
       
       if(this._primerArticulo == null){
         this._primerArticulo = objArticulo;
@@ -49,6 +49,7 @@ export default class Inventario{
        
       }
      console.log(this._primerArticulo);
+
     }
     //Insertar en posición al agregar
     /*  NO FUNCIONA JAJAJ :'v
@@ -65,7 +66,7 @@ export default class Inventario{
     }
   }
     return next;
-    }
+}
     */
 
     //Método para borrar un artículo
@@ -77,7 +78,11 @@ export default class Inventario{
       else{
         let posA = this._buscarAnterior(articulo.codigo);
 
-        posA.siguiente = pos.siguiente;
+        pos.siguiente.anterior = posA; 
+
+        posA.siguiente = pos.siguiente;       
+        /*1 2 3*/
+        /*1   3*/
       }
       
       console.log(this._primerArticulo);
@@ -100,33 +105,19 @@ export default class Inventario{
         }
         return buscar;
       }
+    agregarEnPosicion(){
+      
+    }
 
-    /*_invertirArticulos(articulo){
-      var invertir = this._primerArticulo;
-      var ultimo = this._ultimoArticulo;
-      invertir = ultimo;
-      while(true){
-        var anterior = ultimo._buscarAnterior(articulo.codigo);
-        ultimo.siguiente = anterior;
-        ultimo = anterior;
+    Invertir(){
+      let ultimo = this._ultimoArticulo;
+      while(ultimo !== null){
+        console.log('invertido por código: ' + ultimo.codigo);
+        ultimo = ultimo.anterior;
       }
-
-    }*/
-    /*_invertirArticulos(articulo){
-      
-      var ultimo = this._ultimoArticulo;
-      var anterior = ultimo._buscarAnterior(articulo.codigo);
-      
-      while(ultimo.anterior != null){
-        
-        ultimo.siguiente = anterior;
-        ultimo = anterior;
-      }
-      console.log(ultimo);
-      
-    }*/
-
-    
+    }
+    /* 1,2,3,4,5 */
+    /* 5,4,3,2,1 */   
 
     //Agrega el artículo a la interfaz de la tabla
     AgregarEnTabla(articulo, objArticulo){
