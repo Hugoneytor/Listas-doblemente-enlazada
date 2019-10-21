@@ -34,31 +34,59 @@ export default class Inventario{
         this._ultimoArticulo = objArticulo;
         this._contador++;
       }else{
-        let anterior = this._ultimoArticulo;
-        this._ultimoArticulo.siguiente = objArticulo;
-        this._ultimoArticulo = objArticulo;
-        this._ultimoArticulo.anterior = anterior;
-        this._contador++;       
+        this._agregarYOrdenar(objArticulo);
+
+        // let anterior = this._ultimoArticulo;
+        // this._ultimoArticulo.siguiente = objArticulo;
+        // this._ultimoArticulo = objArticulo;
+        // this._ultimoArticulo.anterior = anterior;
+        // this._contador++;       
         
       }
       
      console.log(this._primerArticulo);
 
     }
-   
+   _agregarYOrdenar(objArticulo){
+     let obj = objArticulo;
+    if(obj < this._primerArticulo){
+      obj.siguiente = this._primerArticulo;
+      this._primerArticulo.anterior = obj;
+      this._primerArticulo = obj;
+    }else if(obj > this._ultimoArticulo){
+      obj.anterior = this._ultimoArticulo;
+      this._ultimoArticulo.siguiente = obj;
+      this._ultimoArticulo = obj;
+    }else{
+      let guardar = this._primerArticulo.siguiente;
+      while(guardar != null && obj.siguiente == null){
+        if(guardar > obj){
+          obj.siguiente = guardar;
+          obj.anterior = guardar.anterior;
+          guardar.anterior.siguiente = obj;
+          guardar.anterior = obj;
+        }
+        guardar = guardar.siguiente;
+      }
+    }
+   }
     
     //Método para borrar un artículo
     borrarArticulo(row,articulo){
       let pos = this._buscarArticulo(articulo.codigo);
       if(pos == this._primerArticulo){
         this._primerArticulo = pos.siguiente;
+        this._primerArticulo.anterior = null;
+      }else if(this._ultimoArticulo == pos){
+        let posA = this._buscarAnterior(articulo.codigo);
+        posA.siguiente = null; 
+        this._ultimoArticulo = posA;
       }
       else{
         let posA = this._buscarAnterior(articulo.codigo);
-
+        posA.siguiente = pos.siguiente; 
         pos.siguiente.anterior = posA; 
 
-        posA.siguiente = pos.siguiente;       
         /*1 2 3*/
         /*1   3*/
       }
@@ -83,15 +111,7 @@ export default class Inventario{
         }
         return buscar;
       }
-    /* Agregar en posición: No FUNCIONA */
-    agregarEnPosicion(){
-      let posicion = this._primerArticulo;
-      while(posicion != null){
-        if(posicion.codigo > posicion.siguiente.codigo){
-          posicion = posicion.siguiente;
-        }
-      }
-    }
+
 
     Invertir(){
       let ultimo = this._ultimoArticulo;
